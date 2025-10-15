@@ -1,0 +1,37 @@
+text_demo:
+  task: text-to-text
+  prompt: |
+    Compose a friendly welcome message for a local-first AI toolkit.
+  model: microsoft/phi-2
+  max_new_tokens: 120
+  temperature: 0.7
+  top_p: 0.9
+
+image_style:
+  task: image-to-image
+  model: stabilityai/stable-diffusion-xl-base-1.0
+  guidance_scale: 7.5
+  strength: 0.6
+  prompt: "Stylize the reference image as a watercolor painting"
+  negative_prompt: "blurry, distorted"
+  init_image: inputs/reference.png
+  output_path: outputs/image_style.png
+
+loop_animation:
+  task: image-to-video
+  model: stabilityai/stable-video-diffusion-img2vid
+  prompt: "A gentle camera orbit around the object"
+  num_frames: 25
+  fps: 7
+  motion_bucket_id: 127
+  cond_aug: 0.02
+  init_image: inputs/reference.png
+  output_path: outputs/loop_animation.mp4
+
+key_frames:
+  task: video-to-image
+  sampler: every-n-frames
+  every_n_frames: 12
+  max_frames: 5
+  input_video: inputs/demo.mp4
+  output_dir: outputs/key_frames
